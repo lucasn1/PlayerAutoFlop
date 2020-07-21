@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/1060ff926e.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>player</title>
+</head>
+<body>
+    <div class="player">
+        <div class="locutor">
+            <div class="chao"></div>
+            <div class="boneco"></div>
+        </div>
+        <div class="info">
+
+            <!-- primeira caixa-->
+
+            <div class="locutor_texto">
+                <p>locutor:</p>
+            </div>
+            <div class="locutor_caixa">
+                <p>AutoFlop</p>
+            </div>
+
+                <!-- segunda caixa -->
+
+            <div class="programa_texto">
+                <p>programa:</p>
+            </div>
+            <div class="programa_caixa">
+                <p>Flopando Sempre</p>
+            </div>
+        </div>
+        <div class="botoes">
+            <div class="play" onclick="play()">
+                <i class="fas fa-play"></i>
+            </div>
+            <div class="pause" onclick="pause()">
+                <i class="fas fa-pause"></i>
+            </div>
+            <div class="recarregar" onclick="recarregar()">
+                <i class="fas fa-sync-alt"></i>
+                <div class="balao_info_recarregar">
+                    <div class="triangle_recarregar"></div>
+                    <p>Recarregar player.</p>
+                </div>
+            </div>
+            <div class="favoritar" onclick="favoritar()">
+                <i class="fas fa-star"></i>
+                <div class="balao_info_favoritar">
+                    <div class="triangle_favoritar"></div>
+                    <p>Favoritar locutor.</p>
+                </div>
+            </div>
+            <div class="pedido" onclick="pedido()">
+                <i class="fas fa-envelope"></i>
+                <div class="balao_info_pedido">
+                  <div class="triangle_pedido"></div>
+                  <p>Fazer um pedido.</p>
+                </div>
+            </div>
+        </div>
+        <div class="slider-container">
+            <span class="bar"><span class="fill"></span></span>
+            <input id="slider" class="slider" type="range" min="0" max="100" value="50">
+        </div>
+    </div>
+    </div>
+    <audio id="stream" src="https://sonic.dedicado.stream:7077/stream"></audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+
+        /*
+	DESENVOLVIDO POR João Fernandes (0i2)
+	Instagram: @joaofernandesxd
+	Twitter:@joaofernandesxd
+*/
+var player = {
+	iniciar:function(){
+		$.ajax({
+    		url: "https://flopados.me/player/status.php",  
+			dataType: "json",
+    		beforeSend:function(){
+				$('.boneco').css('background','url(http://www.habbo.com.br/habbo-imaging/avatarimage?user=:bly&action=&direction=2&head_direction=3&gesture=sml&size=l) center').animate({opacity:1});
+			},
+    		success:function(data){
+       			//console.log(data.avatar[0]);
+       			$('.boneco').css('background','url(http://www.habbo.com.br/habbo-imaging/avatarimage?user='+data.avatar[0]+'&action=&direction=2&head_direction=3&gesture=sml&size=l) center').animate({opacity:1});;
+       			$('.locutor').html(data.locutor[0]);
+       			$('.programa p').html(data.programa[0]);
+       			$('.ouvinte').html(data.ouvintes[0]);
+    		}
+		});
+	}
+}
+$(function (){
+	player.iniciar();
+});
+
+    </script>
+
+</body>
+</html>
